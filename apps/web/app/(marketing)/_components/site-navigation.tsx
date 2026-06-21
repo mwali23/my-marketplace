@@ -9,8 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@kit/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
-import { Trans } from '@kit/ui/trans';
-
 import { SiteNavigationItem } from './site-navigation-item';
 
 /**
@@ -37,19 +35,21 @@ const links: Record<
     path: string;
   }
 > = {
-  /*
-    FAQ: {
-      label: 'marketing:faq',
-      path: '/faq',
-    },
-     */
+  Marketplace: {
+    label: 'Marketplace',
+    path: '/marketplace',
+  },
+  Upload: {
+    label: 'Upload',
+    path: '/upload',
+  },
 };
 
 export function SiteNavigation() {
   const NavItems = Object.values(links).map((item) => {
     return (
       <SiteNavigationItem key={item.path} path={item.path}>
-        <Trans i18nKey={item.label} />
+        {item.label}
       </SiteNavigationItem>
     );
   });
@@ -85,7 +85,7 @@ function MobileDropdown() {
           return (
             <DropdownMenuItem key={item.path} asChild>
               <Link className={className} href={item.path}>
-                <Trans i18nKey={item.label} />
+                {item.label}
               </Link>
             </DropdownMenuItem>
           );

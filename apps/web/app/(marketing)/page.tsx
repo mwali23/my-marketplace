@@ -1,144 +1,150 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArrowRightIcon, LayoutDashboard } from 'lucide-react';
-
 import {
-  CtaButton,
-  FeatureCard,
-  FeatureGrid,
-  FeatureShowcase,
-  FeatureShowcaseIconContainer,
-  Hero,
-  Pill,
-} from '@kit/ui/marketing';
-import { Trans } from '@kit/ui/trans';
+  ArrowRight,
+  BadgeCheck,
+  FileSearch,
+  LockKeyhole,
+  UploadCloud,
+} from 'lucide-react';
 
 import { withI18n } from '~/lib/i18n/with-i18n';
 
 function Home() {
   return (
-    <div className={'mt-4 flex flex-col space-y-24 py-14'}>
-      <div className={'container mx-auto'}>
-        <Hero
-          pill={
-            <Pill label={'New'}>
-              <span>The leading SaaS Starter Kit for ambitious developers</span>
-            </Pill>
-          }
-          title={
-            <>
-              <span>The ultimate SaaS Starter</span>
-              <span>for your next project</span>
-            </>
-          }
-          subtitle={
-            <span>
-              Build and Ship a SaaS faster than ever before with the next-gen
-              SaaS Starter Kit. Ship your SaaS in days, not months.
-            </span>
-          }
-          cta={<MainCallToActionButton />}
-          image={
-            <Image
-              priority
-              className={
-                'dark:border-primary/10 rounded-2xl border border-gray-200'
-              }
-              width={3558}
-              height={2222}
-              src={`/images/dashboard.webp`}
-              alt={`App Image`}
-            />
-          }
-        />
-      </div>
+    <div className="bg-background">
+      <section className="border-b">
+        <div className="container mx-auto grid min-h-[calc(100vh-4rem)] items-center gap-10 px-4 py-10 lg:grid-cols-[1fr_0.9fr]">
+          <div className="max-w-3xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm text-muted-foreground">
+              <BadgeCheck className="h-4 w-4 text-emerald-500" />
+              Verified digital dossiers for high-value assets
+            </div>
 
-      <div className={'container mx-auto'}>
-        <div
-          className={'flex flex-col space-y-16 xl:space-y-32 2xl:space-y-36'}
-        >
-          <FeatureShowcase
-            heading={
-              <>
-                <b className="font-semibold dark:text-white">
-                  The ultimate SaaS Starter Kit
-                </b>
-                .{' '}
-                <span className="text-muted-foreground font-normal">
-                  Unleash your creativity and build your SaaS faster than ever
-                  with Makerkit.
-                </span>
-              </>
-            }
-            icon={
-              <FeatureShowcaseIconContainer>
-                <LayoutDashboard className="h-5" />
-                <span>All-in-one solution</span>
-              </FeatureShowcaseIconContainer>
-            }
-          >
-            <FeatureGrid>
-              <FeatureCard
-                className={'relative col-span-2 overflow-hidden'}
-                label={'Beautiful Dashboard'}
-                description={`Makerkit provides a beautiful dashboard to manage your SaaS business.`}
-              />
+            <h1 className="text-4xl font-bold tracking-normal text-foreground sm:text-5xl lg:text-6xl">
+              Asset Report Marketplace
+            </h1>
 
-              <FeatureCard
-                className={
-                  'relative col-span-2 w-full overflow-hidden lg:col-span-1'
-                }
-                label={'Authentication'}
-                description={`Makerkit provides a variety of providers to allow your users to sign in.`}
-              />
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+              Buy and sell vaulted PDF reports tied to real asset identifiers.
+              Providers upload verified dossiers, buyers search by location or
+              asset ID, and checkout unlocks secure access.
+            </p>
 
-              <FeatureCard
-                className={'relative col-span-2 overflow-hidden lg:col-span-1'}
-                label={'Multi Tenancy'}
-                description={`Multi tenant memberships for your SaaS business.`}
-              />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/marketplace"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
+              >
+                Browse Marketplace
+                <ArrowRight className="h-4 w-4" />
+              </Link>
 
-              <FeatureCard
-                className={'relative col-span-2 overflow-hidden'}
-                label={'Billing'}
-                description={`Makerkit supports multiple payment gateways to charge your customers.`}
-              />
-            </FeatureGrid>
-          </FeatureShowcase>
+              <Link
+                href="/upload"
+                className="inline-flex items-center justify-center gap-2 rounded-md border px-5 py-3 text-sm font-medium shadow-sm hover:bg-muted"
+              >
+                Upload a Report
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-lg border bg-card p-4 shadow-sm">
+            <div className="rounded-md border bg-background p-4">
+              <div className="mb-4 flex items-center justify-between border-b pb-3">
+                <div>
+                  <p className="text-sm font-medium">Live report vault</p>
+                  <p className="text-xs text-muted-foreground">
+                    Searchable, priced, and permissioned
+                  </p>
+                </div>
+                <LockKeyhole className="h-5 w-5 text-emerald-500" />
+              </div>
+
+              <div className="space-y-3">
+                {[
+                  ['Site Diligence Packet', 'Nashville parcel corridor', '$45'],
+                  ['Counter-UAS Brief', 'Restricted airspace review', '$120'],
+                  ['Asset Visual Dossier', 'Industrial roof inspection', '$75'],
+                ].map(([title, description, price]) => (
+                  <div
+                    key={title}
+                    className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-md border p-3"
+                  >
+                    <FileSearch className="h-5 w-5 text-blue-500" />
+                    <div>
+                      <p className="text-sm font-medium">{title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {description}
+                      </p>
+                    </div>
+                    <p className="text-sm font-semibold">{price}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <Metric label="Reports" value="3" />
+                <Metric label="Access" value="Private" />
+                <Metric label="Files" value="PDF" />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="border-b">
+        <div className="container mx-auto grid gap-4 px-4 py-12 md:grid-cols-3">
+          <Step
+            icon={<UploadCloud className="h-5 w-5" />}
+            title="Vault"
+            description="Providers upload rights-confirmed PDF reports into private Supabase storage."
+          />
+          <Step
+            icon={<FileSearch className="h-5 w-5" />}
+            title="Discover"
+            description="Buyers search by asset location or identifier and see trusted report listings."
+          />
+          <Step
+            icon={<LockKeyhole className="h-5 w-5" />}
+            title="Unlock"
+            description="Stripe verifies payment before the app creates purchase access and a signed file link."
+          />
+        </div>
+      </section>
     </div>
   );
 }
 
 export default withI18n(Home);
 
-function MainCallToActionButton() {
+function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className={'flex space-x-4'}>
-      <CtaButton>
-        <Link href={'/auth/sign-up'}>
-          <span className={'flex items-center space-x-0.5'}>
-            <span>
-              <Trans i18nKey={'common:getStarted'} />
-            </span>
+    <div className="rounded-md bg-muted p-3">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="text-sm font-semibold">{value}</p>
+    </div>
+  );
+}
 
-            <ArrowRightIcon
-              className={
-                'animate-in fade-in slide-in-from-left-8 h-4' +
-                ' zoom-in fill-mode-both delay-1000 duration-1000'
-              }
-            />
-          </span>
-        </Link>
-      </CtaButton>
-
-      <CtaButton variant={'link'}>
-        <Link href={'/contact'}>
-          <Trans i18nKey={'common:contactUs'} />
-        </Link>
-      </CtaButton>
+function Step({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="rounded-lg border bg-card p-5 shadow-sm">
+      <div className="mb-4 inline-flex rounded-md border p-2 text-primary">
+        {icon}
+      </div>
+      <h2 className="text-lg font-semibold">{title}</h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        {description}
+      </p>
     </div>
   );
 }
