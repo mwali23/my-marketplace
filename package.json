@@ -45,8 +45,5 @@
     "prettier": "^3.6.2",
     "turbo": "^2.9.18",
     "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "stripe": "^22.2.1"
   }
 }

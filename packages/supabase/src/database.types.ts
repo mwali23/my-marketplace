@@ -34,6 +34,27 @@ export type Database = {
   };
   public: {
     Tables: {
+      assets: {
+        Row: {
+          created_at: string;
+          id: string;
+          location_identifier: string;
+          owner_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          location_identifier: string;
+          owner_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          location_identifier?: string;
+          owner_id?: string;
+        };
+        Relationships: [];
+      };
       accounts: {
         Row: {
           created_at: string | null;
@@ -69,6 +90,79 @@ export type Database = {
           updated_by?: string | null;
         };
         Relationships: [];
+      };
+      purchases: {
+        Row: {
+          amount_paid: number;
+          buyer_id: string;
+          created_at: string;
+          id: string;
+          report_id: string;
+          stripe_checkout_session_id: string;
+        };
+        Insert: {
+          amount_paid: number;
+          buyer_id: string;
+          created_at?: string;
+          id?: string;
+          report_id: string;
+          stripe_checkout_session_id: string;
+        };
+        Update: {
+          amount_paid?: number;
+          buyer_id?: string;
+          created_at?: string;
+          id?: string;
+          report_id?: string;
+          stripe_checkout_session_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'purchases_report_id_fkey';
+            columns: ['report_id'];
+            isOneToOne: false;
+            referencedRelation: 'reports';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      reports: {
+        Row: {
+          asset_id: string;
+          created_at: string;
+          file_path: string;
+          id: string;
+          legal_rights_confirmed: boolean;
+          price: number;
+          provider_id: string;
+        };
+        Insert: {
+          asset_id: string;
+          created_at?: string;
+          file_path: string;
+          id?: string;
+          legal_rights_confirmed?: boolean;
+          price: number;
+          provider_id: string;
+        };
+        Update: {
+          asset_id?: string;
+          created_at?: string;
+          file_path?: string;
+          id?: string;
+          legal_rights_confirmed?: boolean;
+          price?: number;
+          provider_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'reports_asset_id_fkey';
+            columns: ['asset_id'];
+            isOneToOne: false;
+            referencedRelation: 'assets';
+            referencedColumns: ['id'];
+          },
+        ];
       };
     };
     Views: {

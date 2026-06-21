@@ -2,92 +2,130 @@
 
 import React, { useState } from 'react';
 
+import type { MarketplaceReport } from '~/lib/marketplace';
+
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 export default function MarketplacePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<MarketplaceReport[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState<string | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearching(true);
-    
-    // Simulated database search (we'll wire this to Supabase later)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    if (searchQuery.length > 2) {
-      setResults([{
-          id: '123-mock-id',
-          location: searchQuery,
-          price: 45.00,
-          date: new Date().toLocaleDateString(),
-          category: 'Verified Asset Report'
-      }]);
-    } else {
+    setHasSearched(true);
+    setError(null);
+
+    try {
+      const params = new URLSearchParams();
+
+      if (searchQuery.trim()) {
+        params.set('query', searchQuery.trim());
+      }
+
+      const response = await fetch(`/api/reports?${params.toString()}`);
+      const data = (await response.json()) as {
+        reports?: MarketplaceReport[];
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? 'Unable to search reports.');
+      }
+
+      setResults(data.reports ?? []);
+    } catch (searchError) {
       setResults([]);
+      setError(
+        searchError instanceof Error
+          ? searchError.message
+          : 'Unable to search reports.',
+      );
+    } finally {
+      setIsSearching(false);
     }
-    
-    setIsSearching(false);
   };
 
-  const handleBuy = async (report: any) => {
+  const handleBuy = async (report: MarketplaceReport) => {
     setIsRedirecting(report.id);
+    setError(null);
+
     try {
-      // Talk to our new secure Cash Register API
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           reportId: report.id,
-          price: report.price,
-          location: report.location
         }),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as { url?: string; error?: string };
 
-      if (data.url) {
-        // Redirect the buyer to the secure Stripe Checkout page
-        window.location.href = data.url;
-      } else {
-        alert("Checkout failed: " + data.error);
-        setIsRedirecting(null);
+      if (response.status === 401) {
+        window.location.href = `/auth/sign-in?next=${encodeURIComponent(
+          '/marketplace',
+        )}`;
+
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong connecting to the payment processor.");
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error ?? 'Checkout failed.');
+      }
+
+      window.location.href = data.url;
+    } catch (checkoutError) {
+      setError(
+        checkoutError instanceof Error
+          ? checkoutError.message
+          : 'Something went wrong connecting to the payment processor.',
+      );
       setIsRedirecting(null);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Asset Report Marketplace
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Search for an asset location or identifier to purchase existing verified reports.
+            Search for an asset location or identifier to purchase existing
+            verified reports.
           </p>
         </div>
 
-        <div className="mt-8 bg-white overflow-hidden shadow sm:rounded-lg border border-gray-200">
+        <div className="mt-8 overflow-hidden border border-gray-200 bg-white shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <form onSubmit={handleSearch} className="sm:flex">
               <div className="min-w-0 flex-1">
-                <label htmlFor="search" className="sr-only">Search</label>
+                <label htmlFor="search" className="sr-only">
+                  Search
+                </label>
                 <input
                   id="search"
                   type="text"
-                  placeholder="Enter Address, VIN, or Asset ID..."
+                  placeholder="Enter address, VIN, or asset ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
               </div>
-              <div className="mt-3 sm:mt-0 sm:ml-3">
-                <button type="submit" disabled={isSearching} className="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
+              <div className="mt-3 sm:ml-3 sm:mt-0">
+                <button
+                  type="submit"
+                  disabled={isSearching}
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                >
                   {isSearching ? 'Searching...' : 'Find Reports'}
                 </button>
               </div>
@@ -95,40 +133,57 @@ export default function MarketplacePage() {
           </div>
         </div>
 
-        {/* Results Section */}
+        {error ? (
+          <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            {error}
+          </div>
+        ) : null}
+
         <div className="mt-8 space-y-4">
           {results.map((report) => (
-            <div key={report.id} className="bg-white shadow sm:rounded-lg border border-gray-200 overflow-hidden">
-              <div className="px-4 py-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div
+              key={report.id}
+              className="overflow-hidden border border-gray-200 bg-white shadow sm:rounded-lg"
+            >
+              <div className="flex flex-col justify-between gap-4 px-4 py-5 sm:flex-row sm:items-center sm:p-6">
                 <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    {report.location}
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    {report.locationIdentifier}
                   </h3>
-                  <div className="mt-1 text-sm text-gray-500 space-x-2 sm:space-x-4">
+                  <div className="mt-1 space-x-2 text-sm text-gray-500 sm:space-x-4">
                     <span className="block sm:inline">{report.category}</span>
                     <span className="hidden sm:inline">&bull;</span>
-                    <span className="block sm:inline">Vaulted on {report.date}</span>
+                    <span className="block sm:inline">
+                      Vaulted on{' '}
+                      {new Date(report.createdAt).toLocaleDateString()}
+                    </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto space-x-4">
-                  <span className="text-2xl font-bold text-gray-900">${report.price.toFixed(2)}</span>
-                  <button 
+                <div className="flex w-full items-center justify-between space-x-4 sm:w-auto sm:justify-end">
+                  <span className="text-2xl font-bold text-gray-900">
+                    {currencyFormatter.format(report.price)}
+                  </span>
+                  <button
                     onClick={() => handleBuy(report)}
                     disabled={isRedirecting === report.id}
-                    className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
+                    className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
                   >
-                    {isRedirecting === report.id ? 'Loading Checkout...' : 'Buy Now'}
+                    {isRedirecting === report.id
+                      ? 'Loading Checkout...'
+                      : 'Buy Now'}
                   </button>
                 </div>
               </div>
             </div>
           ))}
-          
-          {results.length === 0 && searchQuery && !isSearching && (
-            <div className="text-center py-12 bg-white shadow sm:rounded-lg border border-gray-200">
-              <p className="text-sm text-gray-500">No reports found for "{searchQuery}".</p>
+
+          {hasSearched && results.length === 0 && !isSearching && !error ? (
+            <div className="border border-gray-200 bg-white py-12 text-center shadow sm:rounded-lg">
+              <p className="text-sm text-gray-500">
+                No reports found for {searchQuery || 'your search'}.
+              </p>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
