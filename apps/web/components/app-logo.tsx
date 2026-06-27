@@ -6,14 +6,14 @@ function LogoImage({ className }: { className?: string; width?: number }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-2 whitespace-nowrap text-base font-semibold tracking-normal text-foreground',
+        'text-foreground inline-flex items-center gap-2 text-base font-semibold tracking-normal whitespace-nowrap',
         className,
       )}
     >
-      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground">
-        AV
+      <span className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-md text-sm font-bold">
+        IM
       </span>
-      <span>AssetVault</span>
+      <span>Inspection Marketplace</span>
     </span>
   );
 }

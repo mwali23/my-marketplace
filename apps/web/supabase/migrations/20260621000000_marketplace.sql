@@ -1,5 +1,5 @@
 /*
- * Marketplace schema for vaulted asset reports.
+ * Marketplace schema for inspection reports tied to a property or site.
  * Matches the live Supabase tables shown in the project dashboard and adds
  * purchase entitlements plus private report-file storage.
  */

@@ -54,7 +54,7 @@ export default function UploadPage() {
         throw new Error(data.error ?? 'Upload failed.');
       }
 
-      setMessage('Your report is vaulted and listed in the marketplace.');
+      setMessage('Your inspection report is listed in the marketplace.');
       setFile(null);
       setLocation('');
       setPrice('');
@@ -78,7 +78,8 @@ export default function UploadPage() {
           Upload a Report
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Monetize your professional asset dossiers securely.
+          List an inspection document so the right people can act on its
+          findings.
         </p>
       </div>
 
@@ -90,7 +91,7 @@ export default function UploadPage() {
                 htmlFor="location"
                 className="block text-sm font-medium text-gray-700"
               >
-                Asset Location / Identifier
+                Property, Site, or Record Identifier
               </label>
               <div className="mt-1">
                 <input
@@ -100,8 +101,8 @@ export default function UploadPage() {
                   required
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                  placeholder="123 Main St"
+                  className="block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 caret-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm"
+                  placeholder="123 Main St or permit number"
                 />
               </div>
             </div>
@@ -126,7 +127,7 @@ export default function UploadPage() {
                   step="0.01"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-7 pr-12 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pr-12 pl-7 text-gray-900 caret-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   placeholder="45.00"
                 />
               </div>
@@ -136,7 +137,7 @@ export default function UploadPage() {
               <label className="block text-sm font-medium text-gray-700">
                 Upload Document (PDF only)
               </label>
-              <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pb-6 pt-5 transition-colors hover:border-gray-400">
+              <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 transition-colors hover:border-gray-400">
                 <div className="space-y-1 text-center">
                   <svg
                     className="mx-auto h-12 w-12 text-gray-400"
@@ -155,7 +156,7 @@ export default function UploadPage() {
                   <div className="flex justify-center text-sm text-gray-600">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2"
+                      className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:outline-none hover:text-blue-500"
                     >
                       <span>Upload a file</span>
                       <input
@@ -217,10 +218,10 @@ export default function UploadPage() {
               <button
                 type="submit"
                 disabled={!legalConfirmed || isSubmitting}
-                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting
-                  ? 'Uploading to Vault...'
+                  ? 'Uploading Report...'
                   : 'Upload & List on Marketplace'}
               </button>
             </div>

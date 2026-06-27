@@ -96,11 +96,11 @@ export default function MarketplacePage() {
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Asset Report Marketplace
+            Inspection Report Marketplace
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Search for an asset location or identifier to purchase existing
-            verified reports.
+            Find existing inspection documents by address, property, site, or
+            record identifier.
           </p>
         </div>
 
@@ -114,17 +114,17 @@ export default function MarketplacePage() {
                 <input
                   id="search"
                   type="text"
-                  placeholder="Enter address, VIN, or asset ID"
+                  placeholder="Enter an address, permit, or record ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-gray-900 caret-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
               </div>
-              <div className="mt-3 sm:ml-3 sm:mt-0">
+              <div className="mt-3 sm:mt-0 sm:ml-3">
                 <button
                   type="submit"
                   disabled={isSearching}
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
                 >
                   {isSearching ? 'Searching...' : 'Find Reports'}
                 </button>
@@ -147,14 +147,14 @@ export default function MarketplacePage() {
             >
               <div className="flex flex-col justify-between gap-4 px-4 py-5 sm:flex-row sm:items-center sm:p-6">
                 <div>
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
                     {report.locationIdentifier}
                   </h3>
                   <div className="mt-1 space-x-2 text-sm text-gray-500 sm:space-x-4">
                     <span className="block sm:inline">{report.category}</span>
                     <span className="hidden sm:inline">&bull;</span>
                     <span className="block sm:inline">
-                      Vaulted on{' '}
+                      Listed on{' '}
                       {new Date(report.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -166,7 +166,7 @@ export default function MarketplacePage() {
                   <button
                     onClick={() => handleBuy(report)}
                     disabled={isRedirecting === report.id}
-                    className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
+                    className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
                   >
                     {isRedirecting === report.id
                       ? 'Loading Checkout...'

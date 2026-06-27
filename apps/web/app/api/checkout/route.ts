@@ -77,11 +77,13 @@ export async function POST(req: Request) {
     }
 
     const locationIdentifier =
-      report.assets?.location_identifier ?? 'Asset Report';
+      report.assets?.location_identifier ?? 'Inspection Report';
     const amountCents = toStripeAmountCents(report.price);
     const stripe = new Stripe(stripeSecretKey);
     const buyerEmail =
-      typeof userResult.data.email === 'string' ? userResult.data.email : undefined;
+      typeof userResult.data.email === 'string'
+        ? userResult.data.email
+        : undefined;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -92,8 +94,8 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `Asset Report: ${locationIdentifier}`,
-              description: 'Full digital access to the vaulted asset dossier.',
+              name: `Inspection Report: ${locationIdentifier}`,
+              description: 'Secure digital access to the inspection document.',
             },
             unit_amount: amountCents,
           },
