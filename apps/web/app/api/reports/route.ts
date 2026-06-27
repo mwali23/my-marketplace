@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { z } from 'zod';
 
 import type { Database } from '~/lib/database.types';
 import {
   MAX_REPORT_FILE_SIZE,
-  REPORTS_BUCKET,
   type MarketplaceReport,
+  REPORTS_BUCKET,
   toPriceNumber,
 } from '~/lib/marketplace';
 
@@ -65,10 +66,10 @@ export async function GET(request: Request) {
   const marketplaceReports: MarketplaceReport[] = (reports ?? []).map(
     (report) => ({
       id: report.id,
-      locationIdentifier: assetById.get(report.asset_id) ?? 'Unknown asset',
+      locationIdentifier: assetById.get(report.asset_id) ?? 'Unknown location',
       price: toPriceNumber(report.price),
       createdAt: report.created_at,
-      category: 'Verified Asset Report',
+      category: 'Inspection Report',
     }),
   );
 
@@ -181,7 +182,7 @@ export async function POST(request: Request) {
       locationIdentifier: asset.location_identifier,
       price: toPriceNumber(report.price),
       createdAt: report.created_at,
-      category: 'Verified Asset Report',
+      category: 'Inspection Report',
     } satisfies MarketplaceReport,
   });
 }
