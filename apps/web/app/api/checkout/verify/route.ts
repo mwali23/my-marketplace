@@ -96,7 +96,7 @@ export async function GET(request: Request) {
     report: {
       id: report.id,
       locationIdentifier:
-        report.assets?.location_identifier ?? 'Purchased Inspection Report',
+        report.assets?.location_identifier ?? 'Purchased Rental Inspection Report',
       price: toPriceNumber(report.price),
       downloadUrl: `/api/reports/${report.id}/download`,
     },

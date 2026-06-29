@@ -69,7 +69,7 @@ export async function GET(request: Request) {
       locationIdentifier: assetById.get(report.asset_id) ?? 'Unknown location',
       price: toPriceNumber(report.price),
       createdAt: report.created_at,
-      category: 'Inspection Report',
+      category: 'Rental Inspection Report',
     }),
   );
 
@@ -182,7 +182,7 @@ export async function POST(request: Request) {
       locationIdentifier: asset.location_identifier,
       price: toPriceNumber(report.price),
       createdAt: report.created_at,
-      category: 'Inspection Report',
+      category: 'Rental Inspection Report',
     } satisfies MarketplaceReport,
   });
 }

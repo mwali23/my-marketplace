@@ -9,7 +9,7 @@ export function SiteFooter() {
       logo={<AppLogo className="w-[85px] md:w-[95px]" />}
       description={<Trans i18nKey="marketing:footerDescription" />}
       copyright={
-        'Copyright ' + new Date().getFullYear() + ' Inspection Marketplace.'
+        'Copyright ' + new Date().getFullYear() + ' InspectRelay.'
       }
       sections={[
         {

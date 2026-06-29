@@ -11,9 +11,9 @@ function LogoImage({ className }: { className?: string; width?: number }) {
       )}
     >
       <span className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-md text-sm font-bold">
-        IM
+        IR
       </span>
-      <span>Inspection Marketplace</span>
+      <span className="hidden sm:inline">InspectRelay</span>
     </span>
   );
 }

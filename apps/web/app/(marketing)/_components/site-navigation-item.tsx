@@ -6,18 +6,6 @@ import { usePathname } from 'next/navigation';
 import { NavigationMenuItem } from '@kit/ui/navigation-menu';
 import { cn, isRouteActive } from '@kit/ui/utils';
 
-const getClassName = (path: string, currentPathName: string) => {
-  const isActive = isRouteActive(path, currentPathName);
-
-  return cn(
-    `inline-flex w-max text-sm font-medium transition-colors duration-300`,
-    {
-      'dark:text-gray-300 dark:hover:text-white': !isActive,
-      'text-current dark:text-white': isActive,
-    },
-  );
-};
-
 export function SiteNavigationItem({
   path,
   children,
@@ -25,11 +13,20 @@ export function SiteNavigationItem({
   path: string;
 }>) {
   const currentPathName = usePathname();
-  const className = getClassName(path, currentPathName);
+  const isActive = isRouteActive(path, currentPathName);
 
   return (
     <NavigationMenuItem key={path}>
-      <Link className={className} href={path}>
+      <Link
+        aria-current={isActive ? 'page' : undefined}
+        className={cn(
+          'text-muted-foreground hover:text-foreground inline-flex w-max items-center gap-2 border-b-2 border-transparent py-2 text-sm font-medium transition-colors',
+          {
+            'border-primary text-foreground': isActive,
+          },
+        )}
+        href={path}
+      >
         {children}
       </Link>
     </NavigationMenuItem>

@@ -92,12 +92,12 @@ function SuccessContent() {
 
   if (state.status === 'verifying') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-50">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900">
             Verifying secure payment...
           </h2>
-          <p className="mt-2 text-gray-500">Unlocking the report.</p>
+          <p className="mt-2 text-gray-500">Preparing your report.</p>
         </div>
       </div>
     );
@@ -105,7 +105,7 @@ function SuccessContent() {
 
   if (state.status === 'error') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-50">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900">
             Unable to verify payment
@@ -125,7 +125,7 @@ function SuccessContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
         <div className="overflow-hidden border border-green-200 bg-white shadow sm:rounded-lg">
           <div className="border-b border-green-200 bg-green-50 px-4 py-5 text-center sm:p-6">
@@ -172,7 +172,7 @@ function SuccessContent() {
                 onClick={navigateToMarketplace}
                 className="text-gray-500 underline hover:text-gray-800"
               >
-                Browse more reports
+                Find another report
               </button>
             </div>
           </div>
@@ -186,7 +186,7 @@ export default function SuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gray-50">
           <p className="text-xl text-gray-600">
             Loading your secure environment...
           </p>
