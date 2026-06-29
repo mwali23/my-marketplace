@@ -1,4 +1,4 @@
-import { Home, User } from 'lucide-react';
+import { FileSearch, FileUp, LayoutDashboard, User } from 'lucide-react';
 import { z } from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -12,10 +12,20 @@ const routes = [
     label: 'common:routes.application',
     children: [
       {
-        label: 'common:routes.home',
+        label: 'common:routes.workspace',
         path: pathsConfig.app.home,
-        Icon: <Home className={iconClasses} />,
+        Icon: <LayoutDashboard className={iconClasses} />,
         end: true,
+      },
+      {
+        label: 'common:routes.reports',
+        path: '/marketplace',
+        Icon: <FileSearch className={iconClasses} />,
+      },
+      {
+        label: 'common:routes.listReport',
+        path: '/upload',
+        Icon: <FileUp className={iconClasses} />,
       },
     ],
   },

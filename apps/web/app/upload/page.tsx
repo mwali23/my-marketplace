@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 
+import Link from 'next/link';
+
+import { ArrowLeft } from 'lucide-react';
+
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [location, setLocation] = useState('');
@@ -72,14 +76,22 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col justify-center bg-gray-50 py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Upload a Report
+        <Link
+          href="/marketplace"
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Find reports
+        </Link>
+
+        <h2 className="mt-4 text-center text-3xl font-extrabold text-gray-900">
+          List a Rental Inspection Report
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          List an inspection document so the right people can act on its
-          findings.
+          Share a rental inspection document so its findings can support
+          the next repair decision.
         </p>
       </div>
 
@@ -91,7 +103,7 @@ export default function UploadPage() {
                 htmlFor="location"
                 className="block text-sm font-medium text-gray-700"
               >
-                Property, Site, or Record Identifier
+                Property Address or Unit Identifier
               </label>
               <div className="mt-1">
                 <input
@@ -102,7 +114,7 @@ export default function UploadPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className="block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 caret-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm"
-                  placeholder="123 Main St or permit number"
+                  placeholder="123 Main St, Unit 4B"
                 />
               </div>
             </div>
@@ -222,7 +234,7 @@ export default function UploadPage() {
               >
                 {isSubmitting
                   ? 'Uploading Report...'
-                  : 'Upload & List on Marketplace'}
+                  : 'List Rental Inspection Report'}
               </button>
             </div>
           </form>

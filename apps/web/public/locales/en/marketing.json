@@ -34,6 +34,6 @@
   "contactError": "An error occurred while sending your message",
   "contactSuccessDescription": "We have received your message and will get back to you as soon as possible",
   "contactErrorDescription": "An error occurred while sending your message. Please try again later",
-  "footerDescription": "Connecting inspection findings with the people who can resolve them.",
+  "footerDescription": "Helping rental-property teams move from inspection findings to repair-ready action.",
   "copyright": "© Copyright {{year}} {{product}}. All Rights Reserved."
 }

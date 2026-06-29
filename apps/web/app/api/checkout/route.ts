@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     }
 
     const locationIdentifier =
-      report.assets?.location_identifier ?? 'Inspection Report';
+      report.assets?.location_identifier ?? 'Rental Inspection Report';
     const amountCents = toStripeAmountCents(report.price);
     const stripe = new Stripe(stripeSecretKey);
     const buyerEmail =
@@ -94,7 +94,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `Inspection Report: ${locationIdentifier}`,
+              name: `Rental Inspection Report: ${locationIdentifier}`,
               description: 'Secure digital access to the inspection document.',
             },
             unit_amount: amountCents,

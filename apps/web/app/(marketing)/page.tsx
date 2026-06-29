@@ -18,17 +18,17 @@ function Home() {
           <div className="max-w-3xl">
             <div className="text-muted-foreground mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
               <BadgeCheck className="h-4 w-4 text-emerald-500" />
-              Inspection findings that lead to action
+              Built for small rental portfolios
             </div>
 
             <h1 className="text-foreground text-4xl font-bold tracking-normal sm:text-5xl lg:text-6xl">
-              Inspection Report Marketplace
+              InspectRelay
             </h1>
 
             <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8">
-              Find and share inspection documents tied to real properties,
-              sites, and records. Turn identified issues into a clear path
-              toward qualified repair and remediation services.
+              Find and share rental-property inspection reports by address or
+              unit. Keep findings organized and prepare repair work for the
+              right local service provider.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -36,7 +36,7 @@ function Home() {
                 href="/marketplace"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium shadow"
               >
-                Browse Marketplace
+                Find Reports
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -44,7 +44,7 @@ function Home() {
                 href="/upload"
                 className="hover:bg-muted inline-flex items-center justify-center gap-2 rounded-md border px-5 py-3 text-sm font-medium shadow-sm"
               >
-                Upload a Report
+                List a Report
               </Link>
             </div>
           </div>
@@ -53,9 +53,9 @@ function Home() {
             <div className="bg-background rounded-md border p-4">
               <div className="mb-4 flex items-center justify-between border-b pb-3">
                 <div>
-                  <p className="text-sm font-medium">Inspection marketplace</p>
+                  <p className="text-sm font-medium">Rental inspection exchange</p>
                   <p className="text-muted-foreground text-xs">
-                    Searchable documents with secure access
+                    Private reports with secure access
                   </p>
                 </div>
                 <LockKeyhole className="h-5 w-5 text-emerald-500" />
@@ -64,18 +64,18 @@ function Home() {
               <div className="space-y-3">
                 {[
                   [
-                    'Home Inspection Report',
-                    'Residential safety findings',
+                    'Rental Turnover Report',
+                    'Move-out condition findings',
                     '$45',
                   ],
                   [
-                    'Fire Safety Inspection',
-                    'Commercial compliance review',
+                    'Routine Property Inspection',
+                    'Unit and common-area review',
                     '$60',
                   ],
                   [
                     'Roof Inspection Report',
-                    'Repair-ready condition findings',
+                    'Exterior condition findings',
                     '$75',
                   ],
                 ].map(([title, description, price]) => (
@@ -96,7 +96,7 @@ function Home() {
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <Metric label="Reports" value="3" />
+                <Metric label="Focus" value="Rentals" />
                 <Metric label="Access" value="Private" />
                 <Metric label="Files" value="PDF" />
               </div>
@@ -110,17 +110,17 @@ function Home() {
           <Step
             icon={<UploadCloud className="h-5 w-5" />}
             title="List"
-            description="Inspectors and document owners list rights-confirmed PDF reports with secure file storage."
+            description="Owners, managers, and inspectors list rights-confirmed rental inspection reports securely."
           />
           <Step
             icon={<FileSearch className="h-5 w-5" />}
-            title="Discover"
-            description="Buyers search by property, site, or record identifier to find relevant inspection documents."
+            title="Find"
+            description="Search by property address or unit identifier to find the relevant report."
           />
           <Step
             icon={<LockKeyhole className="h-5 w-5" />}
-            title="Unlock"
-            description="Secure checkout unlocks the report and creates a path from each finding to the right service provider."
+            title="Act"
+            description="Use documented findings to scope repair work and prepare the next service call."
           />
         </div>
       </section>

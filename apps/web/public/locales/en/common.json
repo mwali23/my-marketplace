@@ -57,6 +57,9 @@
   "back": "Back",
   "routes": {
     "home": "Home",
+    "workspace": "Workspace",
+    "reports": "Find Reports",
+    "listReport": "List Report",
     "account": "Account",
     "members": "Members",
     "billing": "Billing",

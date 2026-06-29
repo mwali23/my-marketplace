@@ -92,15 +92,15 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Inspection Report Marketplace
+            Rental Inspection Reports
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Find existing inspection documents by address, property, site, or
-            record identifier.
+            Search rental inspection documents by property address, unit, or
+            report identifier.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function MarketplacePage() {
                 <input
                   id="search"
                   type="text"
-                  placeholder="Enter an address, permit, or record ID"
+                  placeholder="Enter a property address or unit ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-gray-900 caret-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
